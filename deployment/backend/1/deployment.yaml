@@ -9,7 +9,6 @@ metadata:
     app.kubernetes.io/name: backend1
     app.kubernetes.io/part-of: api-workshop
     app.openshift.io/runtime: nodejs
-    app.openshift.io/runtime-namespace: api-workshop
 spec:
   replicas: 1
   selector:
