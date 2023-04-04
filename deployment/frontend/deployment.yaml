@@ -21,8 +21,13 @@ spec:
         app: frontend
         deployment: frontend
     spec:
+      volumes:
+      - name: app-config
+        configMap:
+          name: app-config
+          defaultMode: 509
       containers:
-        resources:
+        - resources:
             requests:
               cpu: 150m
               memory: 128Mi
@@ -38,6 +43,9 @@ spec:
             failureThreshold: 3
           terminationMessagePath: /dev/termination-log
           name: frontend
+          volumeMounts:
+            - name: app-config
+              mountPath: '/usr/share/nginx/html/config'
           livenessProbe:
             httpGet:
               path: /probes/liveness
@@ -48,18 +56,18 @@ spec:
             successThreshold: 1
             failureThreshold: 3
           envFrom:
-            configMapRef:
+          - configMapRef:
               name: app-environment
           ports:
-              containerPort: 8080
+            - containerPort: 8080
               protocol: TCP
-              containerPort: 8443
+            - containerPort: 8443
               protocol: TCP
           imagePullPolicy: IfNotPresent
           terminationMessagePolicy: File
-         # Update with your image name
-         image: 'quay.io/dgitomirsky/nginx-workshop-fe:v1'
-         #
+          # Update with your image name
+          image: 'quay.io/dgitomirsky/nginx-workshop-fe:v1'
+          #
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
       dnsPolicy: ClusterFirst

@@ -22,7 +22,7 @@ spec:
         deployment: backend2
     spec:
       containers:
-        resources:
+        - resources:
             requests:
               cpu: 150m
               memory: 128Mi
@@ -48,19 +48,17 @@ spec:
             successThreshold: 1
             failureThreshold: 3
           env:
-              name: PORT
+            - name: PORT
               valueFrom:
                 configMapKeyRef:
                   name: app-environment
                   key: BACKEBD_PORT
           ports:
-              containerPort: 9091
+            - containerPort: 9091
               protocol: TCP
           imagePullPolicy: IfNotPresent
           terminationMessagePolicy: File
-         # Update with your image name
-         image: 'quay.io/dgitomirsky/nginx-workshop-be:v1'
-         #
+          image: 'quay.io/dgitomirsky/nginx-workshop-be:v1'
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
       dnsPolicy: ClusterFirst
