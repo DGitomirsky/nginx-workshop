@@ -7,7 +7,7 @@ resources:
 - frontend
 
 configMapGenerator:
-- name: app-environment
+  name: app-environment
   literals:
     - BACKEBD_PORT=9091
     - PORT=8080
